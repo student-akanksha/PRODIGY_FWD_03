@@ -370,8 +370,10 @@ function renderProducts() {
         const productDiv = document.createElement('div');
         productDiv.className = 'product';
         productDiv.innerHTML = `
-            <img src="${product.image}" alt="${product.name}">
-            <h3>${product.name}</h3>
+            <div class="product-image-container" onclick="window.location.href='item-detail.html?id=${product.id}'">
+                <img src="${product.image}" alt="${product.name}">
+            </div>
+            <h3 onclick="window.location.href='item-detail.html?id=${product.id}'">${product.name}</h3>
             <p>${product.description}</p>
             <div class="price">$${product.price.toFixed(2)}</div>
             <button onclick="addToCart(${product.id})">Add to Cart</button>
@@ -402,14 +404,66 @@ function renderCart() {
     cart.forEach(item => {
         total += item.price * item.qty;
         const li = document.createElement('li');
+        
+        // Create details HTML based on category
+        let detailsHtml = '';
+        if (item.category === 'fashion') {
+            detailsHtml = `
+                <div class="cart-item-details-list">
+                    <span><strong>Size:</strong> ${item.selectedSize || 'M'}</span>
+                    <span><strong>Color:</strong> ${item.details?.color || 'Standard'}</span>
+                    <span><strong>Material:</strong> ${item.details?.material || 'Cotton'}</span>
+                </div>
+            `;
+        } else if (item.category === 'grocery') {
+            detailsHtml = `
+                <div class="cart-item-details-list">
+                    <span><strong>Weight:</strong> ${item.details?.weight || 'Standard'}</span>
+                    <span><strong>Origin:</strong> ${item.details?.origin || 'Local'}</span>
+                    <span><strong>Storage:</strong> ${item.details?.storage || 'Room temperature'}</span>
+                </div>
+            `;
+        } else if (item.category === 'electronics') {
+            detailsHtml = `
+                <div class="cart-item-details-list">
+                    <span><strong>Warranty:</strong> 1 Year</span>
+                    <span><strong>Condition:</strong> New</span>
+                </div>
+            `;
+        }
+
         li.innerHTML = `
-            <span>${item.name} x${item.qty}</span>
-            <span>$${(item.price * item.qty).toFixed(2)}</span>
-            <button onclick="removeFromCart(${item.id})">Remove</button>
+            <div class="cart-item">
+                <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                <div class="cart-item-details">
+                    <span class="cart-item-name">${item.name}</span>
+                    ${detailsHtml}
+                    <div class="cart-item-quantity-control">
+                        <button onclick="updateQuantity(${item.id}, ${item.qty - 1})" class="quantity-btn">-</button>
+                        <span class="cart-item-quantity">x${item.qty}</span>
+                        <button onclick="updateQuantity(${item.id}, ${item.qty + 1})" class="quantity-btn">+</button>
+                    </div>
+                    <span class="cart-item-price">$${(item.price * item.qty).toFixed(2)}</span>
+                </div>
+                <button onclick="removeFromCart(${item.id})" class="remove-btn">Remove</button>
+            </div>
         `;
         cartItems.appendChild(li);
     });
     document.getElementById('cart-total').textContent = total.toFixed(2);
+}
+
+function updateQuantity(productId, newQuantity) {
+    if (newQuantity < 1) {
+        removeFromCart(productId);
+        return;
+    }
+    const cartItem = cart.find(item => item.id === productId);
+    if (cartItem) {
+        cartItem.qty = newQuantity;
+        updateCartCount();
+        renderCart();
+    }
 }
 
 function removeFromCart(productId) {

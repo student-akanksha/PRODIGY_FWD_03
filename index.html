@@ -8,22 +8,28 @@
 </head>
 <body>
     <header>
-        <h1>Local Store</h1>
-        <nav>
-            <div class="category-buttons">
-                <button class="category-btn active" data-category="all">All</button>
-                <div class="dropdown">
-                    <button class="category-btn" data-category="fashion">Fashion</button>
-                    <div class="dropdown-content">
-                        <button class="subcategory-btn" data-category="fashion" data-subcategory="men">Men</button>
-                        <button class="subcategory-btn" data-category="fashion" data-subcategory="women">Women</button>
+        <div class="navbar">
+            <div class="navbar-left">
+                <a href="index.html" class="logo">Local Store</a>
+                <nav class="category-nav">
+                    <div class="category-buttons">
+                        <button class="category-btn active" data-category="all">All</button>
+                        <div class="dropdown">
+                            <button class="category-btn" data-category="fashion">Fashion</button>
+                            <div class="dropdown-content">
+                                <button class="subcategory-btn" data-category="fashion" data-subcategory="men">Men</button>
+                                <button class="subcategory-btn" data-category="fashion" data-subcategory="women">Women</button>
+                            </div>
+                        </div>
+                        <button class="category-btn" data-category="grocery">Grocery</button>
+                        <button class="category-btn" data-category="electronics">Electronics</button>
                     </div>
-                </div>
-                <button class="category-btn" data-category="grocery">Grocery</button>
-                <button class="category-btn" data-category="electronics">Electronics</button>
+                </nav>
             </div>
-            <button id="cart-btn">Cart (<span id="cart-count">0</span>)</button>
-        </nav>
+            <div class="navbar-right">
+                <button id="cart-btn">Cart (<span id="cart-count">0</span>)</button>
+            </div>
+        </div>
     </header>
     <main>
         <section id="products">
