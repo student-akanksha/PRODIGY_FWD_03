@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Store E-Commerce</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Local Store</h1>
+        <nav>
+            <div class="category-buttons">
+                <button class="category-btn active" data-category="all">All</button>
+                <div class="dropdown">
+                    <button class="category-btn" data-category="fashion">Fashion</button>
+                    <div class="dropdown-content">
+                        <button class="subcategory-btn" data-category="fashion" data-subcategory="men">Men</button>
+                        <button class="subcategory-btn" data-category="fashion" data-subcategory="women">Women</button>
+                    </div>
+                </div>
+                <button class="category-btn" data-category="grocery">Grocery</button>
+                <button class="category-btn" data-category="electronics">Electronics</button>
+            </div>
+            <button id="cart-btn">Cart (<span id="cart-count">0</span>)</button>
+        </nav>
+    </header>
+    <main>
+        <section id="products">
+            <!-- Products will be rendered here by JavaScript -->
+        </section>
+        <aside id="cart-modal" class="hidden">
+            <h2>Your Cart</h2>
+            <ul id="cart-items"></ul>
+            <div class="cart-total">
+                Total: $<span id="cart-total">0.00</span>
+            </div>
+            <button id="checkout-btn">Checkout</button>
+            <button id="close-cart">Close</button>
+        </aside>
+    </main>
+    <footer>
+        <p>&copy; 2024 Local Store. All rights reserved.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html> 
