@@ -1,456 +1,201 @@
-// Example product data
-const products = [
-    {
-        id: 1,
-        name: "Fresh Apples (1kg)",
-        description: "Crisp, juicy apples from local farms.",
-        price: 3.99,
-        image: "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=400&q=80",
-        category: "grocery"
-    },
-    {
-        id: 2,
-        name: "Organic Honey (500g)",
-        description: "Pure, organic honey harvested locally.",
-        price: 7.49,
-        image: "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80",
-        category: "grocery"
-    },
-    {
-        id: 3,
-        name: "Brown Bread Loaf",
-        description: "Freshly baked brown bread, soft and healthy.",
-        price: 2.5,
-        image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80",
-        category: "grocery"
-    },
-    {
-        id: 4,
-        name: "Farm Eggs (12pcs)",
-        description: "Free-range eggs from local farms.",
-        price: 4.2,
-        image: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80",
-        category: "grocery"
-    },
-    {
-        id: 5,
-        name: "Men's T-Shirt",
-        description: "Comfortable cotton t-shirt for everyday wear.",
-        price: 19.99,
-        image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "men"
-    },
-    {
-        id: 6,
-        name: "Women's Jeans",
-        description: "Stylish and durable jeans for women.",
-        price: 49.99,
-        image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "women"
-    },
-    {
-        id: 7,
-        name: "Smartphone",
-        description: "Latest model with high-resolution camera and long battery life.",
-        price: 699.99,
-        image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
-        category: "electronics"
-    },
-    {
-        id: 8,
-        name: "Laptop",
-        description: "Powerful laptop for work and entertainment.",
-        price: 999.99,
-        image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80",
-        category: "electronics"
-    },
-    {
-        id: 9,
-        name: "Men's Shirt",
-        description: "Classic button-up shirt for formal occasions.",
-        price: 29.99,
-        image: "https://images.unsplash.com/photo-1469398715555-76331a6c7fa0?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "men"
-    },
-    {
-        id: 10,
-        name: "Women's Top",
-        description: "Elegant top for casual outings.",
-        price: 24.99,
-        image: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "women"
-    },
-    {
-        id: 11,
-        name: "Men's Jeans",
-        description: "Durable jeans for men.",
-        price: 39.99,
-        image: "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "men"
-    },
-    {
-        id: 12,
-        name: "Women's Shirt",
-        description: "Stylish shirt for women.",
-        price: 34.99,
-        image: "https://images.unsplash.com/photo-1564257631407-4deb1f99d992?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "women"
-    },
-    {
-        id: 13,
-        name: "Men's Top",
-        description: "Casual top for men.",
-        price: 22.99,
-        image: "https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "men"
-    },
-    {
-        id: 14,
-        name: "Women's T-Shirt",
-        description: "Comfortable t-shirt for women.",
-        price: 18.99,
-        image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "women"
-    },
-    {
-        id: 15,
-        name: "Men's Jeans",
-        description: "Stylish jeans for men.",
-        price: 44.99,
-        image: "https://images.unsplash.com/photo-1555689502-c4b22d76c56f?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "men"
-    },
-    {
-        id: 16,
-        name: "Women's Jeans",
-        description: "Comfortable jeans for women.",
-        price: 49.99,
-        image: "https://images.unsplash.com/photo-1584370848010-d7fe6bc767ec?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "women"
-    },
-    {
-        id: 17,
-        name: "Men's Shirt",
-        description: "Formal shirt for men.",
-        price: 29.99,
-        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "men"
-    },
-    {
-        id: 18,
-        name: "Women's Top",
-        description: "Elegant top for women.",
-        price: 24.99,
-        image: "https://images.unsplash.com/photo-1581044777550-4cfa60707c03?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "women"
-    },
-    {
-        id: 19,
-        name: "Men's T-Shirt",
-        description: "Casual t-shirt for men.",
-        price: 19.99,
-        image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "men"
-    },
-    {
-        id: 20,
-        name: "Women's Shirt",
-        description: "Stylish shirt for women.",
-        price: 34.99,
-        image: "https://images.unsplash.com/photo-1581044777550-4cfa60707c03?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "women"
-    },
-    {
-        id: 21,
-        name: "Men's T-Shirt",
-        description: "Comfortable cotton t-shirt for everyday wear.",
-        price: 19.99,
-        image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "men"
-    },
-    {
-        id: 22,
-        name: "Women's Jeans",
-        description: "Stylish and durable jeans for women.",
-        price: 49.99,
-        image: "https://images.unsplash.com/photo-1584370848010-d7fe6bc767ec?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "women"
-    },
-    {
-        id: 23,
-        name: "Smartphone",
-        description: "Latest model with high-resolution camera and long battery life.",
-        price: 699.99,
-        image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=400&q=80",
-        category: "electronics"
-    },
-    {
-        id: 24,
-        name: "Laptop",
-        description: "Powerful laptop for work and entertainment.",
-        price: 999.99,
-        image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=400&q=80",
-        category: "electronics"
-    },
-    {
-        id: 25,
-        name: "Men's Shirt",
-        description: "Classic button-up shirt for formal occasions.",
-        price: 29.99,
-        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "men"
-    },
-    {
-        id: 26,
-        name: "Women's Top",
-        description: "Elegant top for casual outings.",
-        price: 24.99,
-        image: "https://images.unsplash.com/photo-1581044777550-4cfa60707c03?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "women"
-    },
-    {
-        id: 27,
-        name: "Men's Jeans",
-        description: "Durable jeans for men.",
-        price: 39.99,
-        image: "https://images.unsplash.com/photo-1555689502-c4b22d76c56f?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "men"
-    },
-    {
-        id: 28,
-        name: "Women's Shirt",
-        description: "Stylish shirt for women.",
-        price: 34.99,
-        image: "https://images.unsplash.com/photo-1581044777550-4cfa60707c03?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "women"
-    },
-    {
-        id: 29,
-        name: "Men's Top",
-        description: "Casual top for men.",
-        price: 22.99,
-        image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "men"
-    },
-    {
-        id: 30,
-        name: "Women's T-Shirt",
-        description: "Comfortable t-shirt for women.",
-        price: 18.99,
-        image: "https://images.unsplash.com/photo-1581044777550-4cfa60707c03?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "women"
-    },
-    {
-        id: 31,
-        name: "Men's Jeans",
-        description: "Stylish jeans for men.",
-        price: 44.99,
-        image: "https://images.unsplash.com/photo-1555689502-c4b22d76c56f?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "men"
-    },
-    {
-        id: 32,
-        name: "Women's Jeans",
-        description: "Comfortable jeans for women.",
-        price: 49.99,
-        image: "https://images.unsplash.com/photo-1584370848010-d7fe6bc767ec?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "women"
-    },
-    {
-        id: 33,
-        name: "Men's Shirt",
-        description: "Formal shirt for men.",
-        price: 29.99,
-        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "men"
-    },
-    {
-        id: 34,
-        name: "Women's Top",
-        description: "Elegant top for women.",
-        price: 24.99,
-        image: "https://images.unsplash.com/photo-1581044777550-4cfa60707c03?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "women"
-    },
-    {
-        id: 35,
-        name: "Men's T-Shirt",
-        description: "Casual t-shirt for men.",
-        price: 19.99,
-        image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "men"
-    },
-    {
-        id: 36,
-        name: "Women's Shirt",
-        description: "Stylish shirt for women.",
-        price: 34.99,
-        image: "https://images.unsplash.com/photo-1581044777550-4cfa60707c03?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "women"
-    },
-    {
-        id: 37,
-        name: "Men's T-Shirt",
-        description: "Comfortable cotton t-shirt for everyday wear.",
-        price: 19.99,
-        image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "men"
-    },
-    {
-        id: 38,
-        name: "Women's Jeans",
-        description: "Stylish and durable jeans for women.",
-        price: 49.99,
-        image: "https://images.unsplash.com/photo-1584370848010-d7fe6bc767ec?auto=format&fit=crop&w=400&q=80",
-        category: "fashion",
-        subcategory: "women"
-    },
-    {
-        id: 39,
-        name: "Smartphone",
-        description: "Latest model with high-resolution camera and long battery life.",
-        price: 699.99,
-        image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=400&q=80",
-        category: "electronics"
-    },
-    {
-        id: 40,
-        name: "Laptop",
-        description: "Powerful laptop for work and entertainment.",
-        price: 999.99,
-        image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=400&q=80",
-        category: "electronics"
-    }
-];
+// API Configuration
+const API_BASE_URL = 'http://localhost:5000/api';
 
-let cart = [];
+// Global variable to store products
+let products = [];
+
+// Fetch products from API
+async function fetchProducts() {
+    try {
+        // If products are already loaded, return them
+        if (products.length > 0) {
+            console.log('Returning cached products:', products);
+            return products;
+        }
+        
+        console.log('Fetching products from API...');
+        const response = await fetch(`${API_BASE_URL}/products`);
+        const data = await response.json();
+        console.log('Fetched products:', data);
+        
+        // Store products in memory
+        products = data;
+        return data;
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        return [];
+    }
+}
+
+// Fetch single product from API
+async function fetchProduct(id) {
+    try {
+        // First check if product is in memory
+        const cachedProduct = products.find(p => p.id === id);
+        if (cachedProduct) {
+            return cachedProduct;
+        }
+        
+        const response = await fetch(`${API_BASE_URL}/products/${id}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching product:', error);
+        return null;
+    }
+}
+
+// Create order
+async function createOrder(userId, totalAmount) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/orders`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id: userId,
+                total_amount: totalAmount
+            })
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error creating order:', error);
+        return null;
+    }
+}
+
+// Register user
+async function registerUser(username, email, password) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username,
+                email,
+                password
+            })
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error registering user:', error);
+        return null;
+    }
+}
+
+// Cart functionality
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let currentCategory = 'all';
 let currentSubcategory = null;
 
-function renderProducts() {
-    const productsSection = document.getElementById('products');
-    productsSection.innerHTML = '';
+async function renderProducts() {
+    console.log('Rendering products...');
+    const productsContainer = document.getElementById('products-container');
+    if (!productsContainer) {
+        console.error('Products container not found!');
+        return;
+    }
+
+    const products = await fetchProducts();
+    console.log('Products to render:', products);
+    
+    // Filter products based on category and subcategory
     let filteredProducts = products;
     if (currentCategory !== 'all') {
         filteredProducts = products.filter(product => product.category === currentCategory);
-        if (currentSubcategory) {
-            filteredProducts = filteredProducts.filter(product => product.subcategory === currentSubcategory);
-        }
     }
-    filteredProducts.forEach(product => {
-        const productDiv = document.createElement('div');
-        productDiv.className = 'product';
-        productDiv.innerHTML = `
-            <div class="product-image-container" onclick="window.location.href='item-detail.html?id=${product.id}'">
-                <img src="${product.image}" alt="${product.name}">
+    if (currentSubcategory) {
+        filteredProducts = filteredProducts.filter(product => product.subcategory === currentSubcategory);
+    }
+    
+    console.log('Filtered products:', filteredProducts);
+    
+    if (filteredProducts.length === 0) {
+        productsContainer.innerHTML = '<div class="no-products">No products found in this category.</div>';
+        return;
+    }
+
+    productsContainer.innerHTML = filteredProducts.map(product => `
+        <div class="product-card" data-category="${product.category}">
+            <div class="product-image">
+                <img src="${product.image_url}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/200x200?text=No+Image'">
             </div>
-            <h3 onclick="window.location.href='item-detail.html?id=${product.id}'">${product.name}</h3>
-            <p>${product.description}</p>
-            <div class="price">$${product.price.toFixed(2)}</div>
-            <button onclick="addToCart(${product.id})">Add to Cart</button>
-        `;
-        productsSection.appendChild(productDiv);
-    });
+            <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-description">${product.description}</p>
+                <div class="product-price">$${parseFloat(product.price).toFixed(2)}</div>
+                <div class="product-category">${product.category}</div>
+                <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+            </div>
+        </div>
+    `).join('');
 }
 
 function addToCart(productId) {
+    console.log('Adding to cart:', productId);
     const product = products.find(p => p.id === productId);
+    if (!product) {
+        console.error('Product not found:', productId);
+        return;
+    }
+    
     const cartItem = cart.find(item => item.id === productId);
     if (cartItem) {
         cartItem.qty += 1;
     } else {
         cart.push({ ...product, qty: 1 });
     }
+    localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
+    renderCart();
 }
 
 function updateCartCount() {
-    document.getElementById('cart-count').textContent = cart.reduce((sum, item) => sum + item.qty, 0);
+    const cartCount = document.getElementById('cart-count');
+    if (cartCount) {
+        cartCount.textContent = cart.reduce((sum, item) => sum + item.qty, 0);
+    }
 }
 
 function renderCart() {
     const cartItems = document.getElementById('cart-items');
+    if (!cartItems) return;
+    
     cartItems.innerHTML = '';
     let total = 0;
+    
     cart.forEach(item => {
         total += item.price * item.qty;
-        const li = document.createElement('li');
+        const li = document.createElement('div');
+        li.className = 'cart-item';
         
-        // Create details HTML based on category
-        let detailsHtml = '';
-        if (item.category === 'fashion') {
-            detailsHtml = `
-                <div class="cart-item-details-list">
-                    <span><strong>Size:</strong> ${item.selectedSize || 'M'}</span>
-                    <span><strong>Color:</strong> ${item.details?.color || 'Standard'}</span>
-                    <span><strong>Material:</strong> ${item.details?.material || 'Cotton'}</span>
-                </div>
-            `;
-        } else if (item.category === 'grocery') {
-            detailsHtml = `
-                <div class="cart-item-details-list">
-                    <span><strong>Weight:</strong> ${item.details?.weight || 'Standard'}</span>
-                    <span><strong>Origin:</strong> ${item.details?.origin || 'Local'}</span>
-                    <span><strong>Storage:</strong> ${item.details?.storage || 'Room temperature'}</span>
-                </div>
-            `;
-        } else if (item.category === 'electronics') {
-            detailsHtml = `
-                <div class="cart-item-details-list">
-                    <span><strong>Warranty:</strong> 1 Year</span>
-                    <span><strong>Condition:</strong> New</span>
-                </div>
-            `;
-        }
-
         li.innerHTML = `
-            <div class="cart-item">
-                <img src="${item.image}" alt="${item.name}" class="cart-item-image">
-                <div class="cart-item-details">
-                    <span class="cart-item-name">${item.name}</span>
-                    ${detailsHtml}
-                    <div class="cart-item-quantity-control">
-                        <button onclick="updateQuantity(${item.id}, ${item.qty - 1})" class="quantity-btn">-</button>
-                        <span class="cart-item-quantity">x${item.qty}</span>
-                        <button onclick="updateQuantity(${item.id}, ${item.qty + 1})" class="quantity-btn">+</button>
-                    </div>
-                    <span class="cart-item-price">$${(item.price * item.qty).toFixed(2)}</span>
+            <img src="${item.image_url}" alt="${item.name}" class="cart-item-image">
+            <div class="cart-item-details">
+                <span class="cart-item-name">${item.name}</span>
+                <div class="cart-item-quantity-control">
+                    <button onclick="updateQuantity(${item.id}, ${item.qty - 1})" class="quantity-btn">-</button>
+                    <span class="cart-item-quantity">x${item.qty}</span>
+                    <button onclick="updateQuantity(${item.id}, ${item.qty + 1})" class="quantity-btn">+</button>
                 </div>
-                <button onclick="removeFromCart(${item.id})" class="remove-btn">Remove</button>
+                <span class="cart-item-price">$${(item.price * item.qty).toFixed(2)}</span>
             </div>
+            <button onclick="removeFromCart(${item.id})" class="remove-btn">Remove</button>
         `;
         cartItems.appendChild(li);
     });
-    document.getElementById('cart-total').textContent = total.toFixed(2);
+    
+    const cartTotal = document.getElementById('cart-total');
+    if (cartTotal) {
+        cartTotal.textContent = total.toFixed(2);
+    }
 }
 
 function updateQuantity(productId, newQuantity) {
@@ -461,6 +206,7 @@ function updateQuantity(productId, newQuantity) {
     const cartItem = cart.find(item => item.id === productId);
     if (cartItem) {
         cartItem.qty = newQuantity;
+        localStorage.setItem('cart', JSON.stringify(cart));
         updateCartCount();
         renderCart();
     }
@@ -468,37 +214,66 @@ function updateQuantity(productId, newQuantity) {
 
 function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
+    localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
     renderCart();
 }
 
-document.getElementById('cart-btn').addEventListener('click', () => {
-    document.getElementById('cart-modal').classList.remove('hidden');
-    renderCart();
-});
-document.getElementById('close-cart').addEventListener('click', () => {
-    document.getElementById('cart-modal').classList.add('hidden');
-});
-document.getElementById('checkout-btn').addEventListener('click', () => {
-    if (cart.length === 0) {
-        alert('Your cart is empty!');
-        return;
+// Cart Modal Functionality
+function toggleCart() {
+    const cartModal = document.getElementById('cart-modal');
+    cartModal.classList.toggle('hidden');
+    if (!cartModal.classList.contains('hidden')) {
+        renderCart();
     }
-    alert('Thank you for your purchase! (Demo only, no real payment processed)');
-    cart = [];
-    updateCartCount();
-    renderCart();
-    document.getElementById('cart-modal').classList.add('hidden');
-});
+}
 
-// Category filter event listeners
-document.querySelectorAll('.category-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        currentCategory = button.getAttribute('data-category');
-        currentSubcategory = null;
-        renderProducts();
+// Event Listeners
+document.addEventListener('DOMContentLoaded', async () => {
+    console.log('DOM Content Loaded');
+    // Load products when the page loads
+    await fetchProducts();
+    renderProducts();
+    updateCartCount();
+
+    // Cart button event listener
+    const cartBtn = document.getElementById('cart-btn');
+    if (cartBtn) {
+        cartBtn.addEventListener('click', toggleCart);
+    }
+
+    // Close cart button event listener
+    const closeCartBtn = document.getElementById('close-cart');
+    if (closeCartBtn) {
+        closeCartBtn.addEventListener('click', toggleCart);
+    }
+
+    // Checkout button event listener
+    const checkoutBtn = document.getElementById('checkout-btn');
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            alert('Thank you for your purchase! (Demo only, no real payment processed)');
+            cart = [];
+            localStorage.removeItem('cart');
+            updateCartCount();
+            renderCart();
+            toggleCart();
+        });
+    }
+
+    // Category filter event listeners
+    document.querySelectorAll('.category-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            currentCategory = button.getAttribute('data-category');
+            currentSubcategory = null;
+            renderProducts();
+        });
     });
 });
 
@@ -508,7 +283,4 @@ document.querySelectorAll('.subcategory-btn').forEach(button => {
         currentSubcategory = button.getAttribute('data-subcategory');
         renderProducts();
     });
-});
-
-// Initial render
-renderProducts(); 
+}); 
