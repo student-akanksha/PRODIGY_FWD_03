@@ -46,7 +46,7 @@ nav {
     box-shadow: 0 2px 8px rgba(230, 126, 34, 0.3);
 }
 .cart-btn {
-    background: #e67e22;
+    background: #2d3e50;
     color: white;
     border: none;
     padding: 0.8rem 1.5rem;
@@ -57,7 +57,7 @@ nav {
     gap: 0.5rem;
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(230, 126, 34, 0.3);
+    /* box-shadow: 0 2px 8px rgba(230, 126, 34, 0.3); */
 }
 .cart-btn:hover {
     background: #d35400;

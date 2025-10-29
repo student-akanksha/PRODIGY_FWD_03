@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update User</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        h2 {
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Update User</h2>
+        <form id="updateForm">
+            <input type="text" id="name" placeholder="Enter Name" required>
+            <input type="email" id="email" placeholder="Enter Email" required>
+            <button type="submit">Update</button>
+        </form>
+        <p id="message"></p>
+        <a href="file:///D:/Internship/PRODIGY_FWD_03/index.html">back to main page</a>
+    </div>
+
+    <script>
+        document.getElementById("updateForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            let userId = 1; // <-- Change user ID as needed
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+
+            let response = await fetch(`http://localhost:5000/api/update-user/${userId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ name: name, email: email })
+            });
+
+            let result = await response.json();
+            document.getElementById("message").innerText = result.message || result.error;
+        });
+    </script>
+
+</body>
+</html>

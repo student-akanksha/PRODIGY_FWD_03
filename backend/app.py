@@ -67,6 +67,49 @@ def create_product():
     conn.close()
     return jsonify({'message': 'Product created successfully', 'id': product_id}), 201
 
+@app.route('/api/update-user/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    data = request.json
+    name = data.get("name")
+    email = data.get("email")
+    
+    try:
+        query = "UPDATE users SET username = %s, email = %s WHERE id = %s"
+        values = (name, email, user_id)
+        cursor.execute(query, values)
+        conn.commit()
+
+        if cursor.rowcount == 0:
+            return jsonify({"message": "User not found"}), 404
+
+        return jsonify({"message": "User updated successfully!"})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    
+@app.route('/api/login', methods=['POST'])
+def login():
+    data = request.json
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Check if user exists with given email and password
+    cursor.execute('SELECT * FROM users WHERE email = %s AND password = %s', (data['email'], data['password']))
+    user = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    if user:
+        return jsonify({'data': user, 'message': 'User login successful'}), 200
+    else:
+        return jsonify({'message': 'Invalid email or password'}), 401
+
+
 @app.route('/api/register', methods=['POST'])
 def register():
     data = request.json
@@ -78,8 +121,8 @@ def register():
         conn.close()
         return jsonify({'error': 'Email already registered'}), 400
     cursor.execute(
-        'INSERT INTO users (username, email, password) VALUES (%s, %s, %s)',
-        (data['username'], data['email'], data['password'])
+        'INSERT INTO users (username, name, email, password) VALUES (%s, %s, %s, %s)',
+        (data['username'], data['name'], data['email'], data['password'])
     )
     conn.commit()
     cursor.close()
