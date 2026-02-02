@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Orders - Trend Trove</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .orders-page main {
+            padding: 2rem 1rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .orders-page h1 {
+            color: #2d3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
+        }
+        .orders-table-wrap {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .orders-table th,
+        .orders-table td {
+            padding: 1rem 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .orders-table th {
+            background: #f8f9fa;
+            color: #2d3e50;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .orders-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+        .orders-table .order-id { font-weight: 600; color: #2d3e50; }
+        .orders-table .order-amount { font-weight: 600; color: #2ecc71; }
+        .orders-table .order-status {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .orders-table .order-status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .orders-table .order-status.completed {
+            background: #d4edda;
+            color: #155724;
+        }
+        .orders-table .order-status.failed,
+        .orders-table .order-status.cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .orders-empty {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #666;
+        }
+        .orders-empty i {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+        .orders-loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+        .orders-page .navbar-left .category-nav { display: none; }
+        .orders-page .navbar-right .cart-btn { display: none; }
+        .orders-page .hidden { display: none !important; }
+    </style>
+</head>
+<body class="orders-page">
+    <header>
+        <nav class="navbar">
+            <div class="navbar-left">
+                <a href="index.html" class="logo">Trend Trove</a>
+                <div class="category-nav"></div>
+            </div>
+            <div class="navbar-right">
+                <button id="cart-btn" class="cart-btn" style="display: none;">
+                    <i class="fas fa-shopping-cart"></i>
+                    Cart <span id="cart-count" class="cart-count">0</span>
+                </button>
+                <button id="hamburger-menu" class="hamburger-menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div id="menu-dropdown" class="menu-dropdown hidden">
+                    <a style="color: white" href="profile.html" class="menu-item">
+                        <i class="fas fa-user-alt"></i> Profile
+                    </a>
+                    <a style="color: white" href="all-orders.html" class="menu-item">
+                        <i class="fas fa-list-alt"></i> All Orders
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <h1><i class="fas fa-list-alt"></i> All Orders</h1>
+        <div id="orders-container">
+            <div class="orders-loading" id="orders-loading">
+                <i class="fas fa-spinner fa-spin"></i> Loading orders...
+            </div>
+            <div class="orders-table-wrap hidden" id="orders-table-wrap">
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Order #</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-tbody"></tbody>
+                </table>
+            </div>
+            <div class="orders-empty hidden" id="orders-empty">
+                <i class="fas fa-inbox"></i>
+                <p>No orders yet.</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:5000/api';
+
+        function formatDate(isoStr) {
+            if (!isoStr) return '—';
+            try {
+                const d = new Date(isoStr);
+                return isNaN(d.getTime()) ? isoStr : d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            } catch (_) {
+                return isoStr;
+            }
+        }
+
+        function statusClass(s) {
+            const status = (s || '').toLowerCase();
+            if (status === 'completed') return 'completed';
+            if (status === 'pending') return 'pending';
+            return 'pending';
+        }
+
+        async function loadOrders() {
+            const loading = document.getElementById('orders-loading');
+            const tableWrap = document.getElementById('orders-table-wrap');
+            const empty = document.getElementById('orders-empty');
+            const tbody = document.getElementById('orders-tbody');
+
+            try {
+                const res = await fetch(API_BASE_URL + '/orders');
+                const orders = await res.json();
+                loading.classList.add('hidden');
+
+                if (!orders || orders.length === 0) {
+                    empty.classList.remove('hidden');
+                    return;
+                }
+                empty.classList.add('hidden');
+                tableWrap.classList.remove('hidden');
+
+                tbody.innerHTML = orders.map(function (order) {
+                    const orderId = order.orderId || order.id || '—';
+                    const amount = order.total_amount != null ? '₹' + Number(order.total_amount).toFixed(2) : '—';
+                    const status = order.status || 'pending';
+                    const date = formatDate(order.created_at);
+                    return '<tr>' +
+                        '<td class="order-id">' + (order.id || '—') + '</td>' +
+                        '<td>' + orderId + '</td>' +
+                        '<td class="order-amount">' + amount + '</td>' +
+                        '<td><span class="order-status ' + statusClass(status) + '">' + status + '</span></td>' +
+                        '<td>' + date + '</td>' +
+                        '</tr>';
+                }).join('');
+            } catch (err) {
+                loading.classList.add('hidden');
+                empty.classList.remove('hidden');
+                empty.innerHTML = '<i class="fas fa-exclamation-circle"></i><p>Could not load orders. Make sure the backend is running.</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            loadOrders();
+
+            var hamburger = document.getElementById('hamburger-menu');
+            var menu = document.getElementById('menu-dropdown');
+            if (hamburger && menu) {
+                hamburger.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    menu.classList.toggle('hidden');
+                });
+                document.addEventListener('click', function (e) {
+                    if (!hamburger.contains(e.target) && !menu.contains(e.target)) {
+                        menu.classList.add('hidden');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

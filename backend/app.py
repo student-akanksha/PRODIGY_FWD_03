@@ -129,6 +129,25 @@ def register():
     conn.close()
     return jsonify({'message': 'User registered successfully'}), 201
 
+@app.route('/api/orders', methods=['GET'])
+def get_orders():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute('SELECT * FROM orders ORDER BY id DESC')
+    orders = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    for order in orders:
+        if order.get('total_amount') is not None:
+            order['total_amount'] = float(order['total_amount'])
+        if order.get('created_at') is not None:
+            order['created_at'] = order['created_at'].isoformat() if hasattr(order['created_at'], 'isoformat') else str(order['created_at'])
+        order['status'] = order.get('status') or 'pending'
+        if 'orderId' not in order or order.get('orderId') is None:
+            order['orderId'] = str(order.get('id', ''))
+    return jsonify(orders)
+
+
 @app.route('/api/orders', methods=['POST'])
 def create_order():
     data = request.json

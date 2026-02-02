@@ -131,7 +131,7 @@ async function renderProducts() {
                 <div style="display: flex; justify-content: space-between">
                 <div class="product-price">$${parseFloat(product.price).toFixed(2)}</div>                
                 <div class="item-rating">
-                        <div class="rating-stars" style="color: #ffc107;">
+                    <div class="rating-stars" style="color: #ffc107;">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -140,7 +140,7 @@ async function renderProducts() {
                         </div>
                         <span class="rating-count">${product.rating} (${product.rating_count} ratings)</span>
                     </div>
-                    </div>
+                </div>
                 <div class="product-category">${product.category}</div>
 
                 <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
@@ -288,6 +288,32 @@ document.addEventListener('DOMContentLoaded', async () => {
             renderProducts();
         });
     });
+
+    // Hamburger menu toggle
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    const menuDropdown = document.getElementById('menu-dropdown');
+    
+    if (hamburgerMenu && menuDropdown) {
+        hamburgerMenu.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menuDropdown.classList.toggle('hidden');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburgerMenu.contains(e.target) && !menuDropdown.contains(e.target)) {
+                menuDropdown.classList.add('hidden');
+            }
+        });
+
+        // Close menu when clicking on menu items
+        const menuItems = menuDropdown.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                menuDropdown.classList.add('hidden');
+            });
+        });
+    }
 });
 
 // Subcategory filter event listeners
