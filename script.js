@@ -128,8 +128,21 @@ async function renderProducts() {
             <div class="product-info">
                 <h3 class="product-name">${product.name}</h3>
                 <p class="product-description">${product.description}</p>
-                <div class="product-price">$${parseFloat(product.price).toFixed(2)}</div>
+                <div style="display: flex; justify-content: space-between">
+                <div class="product-price">$${parseFloat(product.price).toFixed(2)}</div>                
+                <div class="item-rating">
+                        <div class="rating-stars" style="color: #ffc107;">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-count">${product.rating} (${product.rating_count} ratings)</span>
+                    </div>
+                    </div>
                 <div class="product-category">${product.category}</div>
+
                 <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
                     <i class="fas fa-shopping-cart"></i> Add to Cart
                 </button>

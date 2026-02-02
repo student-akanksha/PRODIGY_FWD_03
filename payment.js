@@ -73,7 +73,6 @@ async function processPayment(amount, orderId, userId) {
     try {
         // Initialize Razorpay
         const res = await initializeRazorpay();
-        debugger
         if (!res) {
             alert('Razorpay SDK failed to load');
             return;
@@ -81,15 +80,13 @@ async function processPayment(amount, orderId, userId) {
 
         // Create payment
         const paymentData = await createPayment(amount, orderId, userId);
-        debugger
         const orderdetails = await createOrder(userId, amount, orderId);
-        debugger
         // Configure Razorpay options
         const options = {
             key: paymentData.key,
             amount: paymentData.amount,
             currency: paymentData.currency,
-            name: 'Your Store Name',
+            name: 'Trend Trove',
             description: 'Payment for Order #' + orderId,
             order_id: paymentData.id,
             handler: async function (response) {
