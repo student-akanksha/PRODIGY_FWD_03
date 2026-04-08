@@ -86,7 +86,7 @@ async function processPayment(amount, orderId, userId) {
             key: paymentData.key,
             amount: paymentData.amount,
             currency: paymentData.currency,
-            name: 'Trend Trove',
+            name: 'UniMart',
             description: 'Payment for Order #' + orderId,
             order_id: paymentData.id,
             handler: async function (response) {
